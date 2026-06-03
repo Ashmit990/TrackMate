@@ -1,10 +1,12 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Zap, Sparkles, ArrowRight, Building2, Map, MessageSquare, Briefcase, Search, Cpu, BookOpen, Rocket } from 'lucide-react';
 import { Reveal, RevealList, RevealItem } from '@/components/Reveal';
-import { div } from 'framer-motion/m';
 
 const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 bg-[#08060f]/60 backdrop-blur-xl border-b border-white/[0.04]">
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0b1b]/60 backdrop-blur-xl border-b border-white/[0.04]">
     <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
       <div className="flex items-center gap-2.5">
         <div className="h-9 w-9 rounded-md bg-gradient-to-br from-[#7c3aed] to-[#4f46e5] flex items-center justify-center shadow-[0_0_15px_rgba(124,58,237,0.4)]">
@@ -12,14 +14,14 @@ const Navbar = () => (
         </div>
         <span className="text-xl font-display font-black tracking-tight text-white focus:outline-none">TrackMate</span>
       </div>
-      
+
       <div className="hidden md:flex items-center gap-10 text-sm font-medium text-white/60">
         <a href="#features" className="hover:text-white transition-colors duration-300">Features</a>
         <a href="#how-it-works" className="hover:text-white transition-colors duration-300">How It Works</a>
       </div>
-      
+
       <div className="flex items-center gap-6">
-        <button className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-300">Log in</button>
+        <Link href="/login" id="navbar-login-btn" className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-300">Log in</Link>
         <button className="rounded-md bg-gradient-to-r from-[#7c3aed] to-[#4f46e5] px-6 py-2.5 text-sm font-bold text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
           Get Started Free
         </button>
@@ -28,25 +30,45 @@ const Navbar = () => (
   </nav>
 );
 
+const JOB_ROLES = [
+  "Data Scientist",
+  "AI Engineer",
+  "Software Engineer",
+  "Frontend Dev",
+  "Fullstack Dev",
+  "Cybersecurity Specialist",
+  "Cloud Architect",
+  "DevOps Specialist"
+];
+
 export default function Home() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % JOB_ROLES.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="relative min-h-screen bg-[#08060f] selection:bg-[#7c3aed]/30 overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#0a0b1b] selection:bg-[#7c3aed]/30 overflow-x-hidden">
       {/* Global Noise Overlay */}
       <div className="fixed inset-0 z-[100] noise-overlay h-full w-full opacity-[0.03]" />
 
       {/* Background Mesh and Grid */}
       <div className="fixed inset-0 z-0 h-screen w-screen overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] h-[60%] w-[60%] rounded-full bg-[#7c3aed]/15 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full bg-[#06b6d4]/10 blur-[120px]" />
-        <div className="absolute top-[20%] right-[10%] h-[40%] w-[40%] rounded-full bg-[#4f46e5]/10 blur-[120px]" />
-        
+        <div className="absolute top-[-10%] left-[-10%] h-[60%] w-[60%] rounded-full bg-[#7c3aed]/5 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full bg-[#06b6d4]/3 blur-[120px] pointer-events-none" />
+        <div className="absolute top-[20%] right-[10%] h-[40%] w-[40%] rounded-full bg-[#4f46e5]/3 blur-[120px] pointer-events-none" />
+
         {/* Subtle Grid Texture */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]" 
-          style={{ 
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
             backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
             backgroundSize: '60px 60px'
-          }} 
+          }}
         />
       </div>
 
@@ -56,7 +78,7 @@ export default function Home() {
         <section className="mx-auto max-w-7xl px-6 lg:px-8 py-20 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
-            <div className="text-center lg:text-left order-2 lg:order-1">
+            <div className="text-center lg:text-left order-2 lg:order-1 lg:-mt-32 xl:-mt-40">
               {/* Badge */}
               <Reveal delay={0.1}>
                 <div className="inline-flex items-center gap-2 rounded-md border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 text-xs font-semibold text-white/80">
@@ -69,17 +91,14 @@ export default function Home() {
               {/* Heading */}
               <Reveal delay={0.2} y={30}>
                 <h1 className="mt-4 text-5xl font-black font-display tracking-[-0.04em] leading-[0.95] text-white md:text-7xl lg:text-[88px]">
-                  <span className="premium-gradient-text">Your AI roadmap <br className="hidden lg:block" /> to become a</span> <br className="hidden lg:block" />
-                  <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(124,58,237,0.5)]">
-                    Data Scientist
-                  </span>
+                  <span className="premium-gradient-text">Your AI roadmap <br className="hidden lg:block" /> to become a...</span>
                 </h1>
               </Reveal>
 
               {/* Subtext */}
               <Reveal delay={0.4}>
                 <p className="mt-4 max-w-xl text-lg font-medium text-white/40 leading-relaxed md:text-xl mx-auto lg:mx-0">
-                  Enter your target role. Get the companies hiring, a custom learning roadmap, 
+                  Enter your target role. Get the companies hiring, a custom learning roadmap,
                   built-in interview prep, and real job listings.
                 </p>
               </Reveal>
@@ -101,53 +120,41 @@ export default function Home() {
             {/* Right Content - Visual */}
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
               <Reveal delay={0.4} x={40}>
-                <div className="relative group w-full max-w-[550px] lg:max-w-none -mt-16 lg:-mt-24" style={{ transform: 'translateY(-30px)' }}>
+                <div className="relative group w-full max-w-[540px] lg:max-w-[640px] xl:max-w-[720px] 2xl:max-w-[800px] mx-auto lg:ml-auto lg:mr-[-2rem] xl:mr-[-4rem] 2xl:mr-[-6rem] -mt-16 lg:-mt-24" style={{ transform: 'translateY(-20px)' }}>
                   {/* Extended Decorative Background Elements - Full Coverage */}
-                  <div className="absolute -top-40 -right-40 h-[600px] w-[600px] bg-brand-violet/20 blur-[150px] rounded-full animate-pulse" />
-                  <div className="absolute -bottom-40 -left-40 h-[600px] w-[600px] bg-brand-cyan/20 blur-[150px] rounded-full" />
-                  
+                  <div className="absolute -top-40 -right-40 h-[600px] w-[600px] bg-brand-violet/5 blur-[150px] rounded-full animate-pulse pointer-events-none" />
+                  <div className="absolute -bottom-40 -left-40 h-[600px] w-[600px] bg-brand-cyan/4 blur-[150px] rounded-full pointer-events-none" />
+
                   {/* Seamless AI Integration */}
                   <div className="relative transition-all duration-1000">
                     {/* Clean Border Frame */}
-                    <div className="relative rounded-[2.5rem] border-2 border-white/15 bg-white/[0.02] p-4 backdrop-blur-xl shadow-2xl">
-                      <div className="relative aspect-[4/5] lg:aspect-square overflow-hidden rounded-2xl">
-                        <img 
-                          src="/images/ai.png" 
-                          alt="Futuristic AI Robot" 
-                          className="h-full w-full object-cover opacity-100 transition-all duration-1000 saturate-[0.8]"
+                    <div className="relative rounded-l-[2.5rem] rounded-r-none pl-4 py-4 pr-0">
+                      <div className="relative w-full overflow-hidden rounded-l-2xl rounded-r-none" style={{ aspectRatio: '850 / 900' }}>
+                        <img
+                          src="/images/hand.png"
+                          alt="TrackMate AI Hand"
+                          className="h-full w-full object-cover opacity-100 transition-all duration-1000 saturate-[0.9]"
                         />
-                        {/* Subtle Overlay Gradients */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#08060f]/50 via-transparent to-transparent opacity-60" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-[#08060f]/40 via-transparent to-transparent opacity-40" />
-                        
+
+                        {/* Transitioning Job Titles in the middle of the hands */}
+                        <div className="absolute inset-x-0 top-[48%] -translate-y-1/2 z-30 flex flex-col items-center justify-center pointer-events-none">
+                          <div
+                            key={roleIndex}
+                            className="text-2xl sm:text-3xl lg:text-[2.75rem] xl:text-[3.25rem] 2xl:text-[3.5rem] font-black font-display tracking-tight text-center px-4 animate-job-fade"
+                            style={{
+                              backgroundImage: 'linear-gradient(to right, #a78bfa, #f472b6, #22d3ee)',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent',
+                              textShadow: '0 0 20px rgba(167,139,250,0.8), 0 0 40px rgba(244,114,182,0.65), 0 0 80px rgba(34,211,238,0.4)',
+                            }}
+                          >
+                            {JOB_ROLES[roleIndex]}
+                          </div>
+                        </div>
+
                         {/* AI Scanning Effect Overlay */}
                         <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden opacity-0 transition-opacity duration-700">
                           <div className="absolute top-0 left-0 w-full h-[1px] bg-cyan-400/30 shadow-[0_0_20px_#22d3ee] animate-[scan_4s_linear_infinite]" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Floating HUD Badges - Small corner floats */}
-                    <div className="absolute top-4 right-4 p-3 rounded-lg bg-black/50 border border-white/10 backdrop-blur-sm shadow-lg animate-float transition-all duration-500">
-                      <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded-md bg-violet-500/20 flex items-center justify-center border border-violet-500/30">
-                          <Cpu className="h-3 w-3 text-violet-400" />
-                        </div>
-                        <div>
-                          <p className="text-[7px] font-black uppercase tracking-widest text-white/50">Latency</p>
-                          <p className="text-xs font-black text-white leading-none">0.04ms</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="absolute bottom-4 left-4 p-3 rounded-lg bg-black/50 border border-white/10 backdrop-blur-sm shadow-lg animate-float-delayed transition-all duration-500">
-                      <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded-full border border-emerald-500/30 flex items-center justify-center bg-emerald-500/10">
-                          <Sparkles className="h-3 w-3 text-emerald-400" />
-                        </div>
-                        <div>
-                          <p className="text-[7px] font-black uppercase tracking-widest text-white/50">Status</p>
-                          <p className="text-xs font-black text-emerald-400 leading-none">Active</p>
                         </div>
                       </div>
                     </div>
@@ -161,11 +168,11 @@ export default function Home() {
           <div className="mt-32 mx-auto max-w-5xl">
             <Reveal delay={0.8} y={40}>
               <div className="relative group p-px rounded-[2.5rem] bg-gradient-to-b from-white/[0.1] to-transparent">
-                <div className="relative rounded-[2.5rem] bg-[#08060f]/60 backdrop-blur-2xl px-8 py-14 md:px-20 overflow-hidden">
+                <div className="relative rounded-[2.5rem] bg-[#0a0b1b]/60 backdrop-blur-2xl px-8 py-14 md:px-20 overflow-hidden">
                   {/* Background Glow */}
                   <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-violet-500/10 blur-[100px]" />
                   <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-cyan-500/10 blur-[100px]" />
-                  
+
                   <div className="relative z-10 grid grid-cols-1 gap-y-16 md:grid-cols-3 md:gap-y-0">
                     <RevealItem>
                       <div className="flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-500 group-hover:translate-y-[-4px]">
@@ -292,7 +299,7 @@ export default function Home() {
         </section>
 
         {/* Simple Process Section */}
-        <section id="how-it-works" className="relative w-full py-32 lg:py-56 overflow-hidden bg-[#08060f]">
+        <section id="how-it-works" className="relative w-full py-32 lg:py-56 overflow-hidden bg-[#0a0b1b]">
           <div className="relative w-full max-w-7xl mx-auto px-6">
             <Reveal delay={0.1}>
               <div className="flex flex-col items-center text-center">
@@ -314,7 +321,7 @@ export default function Home() {
                 <RevealItem>
                   <div className="relative group">
                     <div className="relative mb-12 flex h-28 w-28 items-center justify-center rounded-[2rem] border border-white/[0.04] bg-white/[0.01] transition-all duration-700 group-hover:border-violet-500/50 group-hover:bg-violet-500/[0.05] group-hover:shadow-[0_0_60px_rgba(124,58,237,0.1)] group-hover:-translate-y-2">
-                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#08060f] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-violet-400 group-hover:border-violet-500/30">01</div>
+                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#0a0b1b] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-violet-400 group-hover:border-violet-500/30">01</div>
                       <Search className="h-12 w-12 text-violet-400/50 transition-all duration-700 group-hover:scale-110 group-hover:text-violet-400 group-hover:rotate-6" />
                     </div>
                     <h3 className="text-2xl font-display font-black text-white tracking-tight transition-colors group-hover:text-violet-100">Pick your target</h3>
@@ -328,7 +335,7 @@ export default function Home() {
                 <RevealItem>
                   <div className="relative group">
                     <div className="relative mb-12 flex h-28 w-28 items-center justify-center rounded-[2rem] border border-white/[0.04] bg-white/[0.01] transition-all duration-700 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/[0.05] group-hover:shadow-[0_0_60px_rgba(6,182,212,0.1)] group-hover:-translate-y-2">
-                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#08060f] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-cyan-400 group-hover:border-cyan-500/30">02</div>
+                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#0a0b1b] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-cyan-400 group-hover:border-cyan-500/30">02</div>
                       <Cpu className="h-12 w-12 text-cyan-400/50 transition-all duration-700 group-hover:scale-110 group-hover:text-cyan-400 group-hover:-rotate-6" />
                     </div>
                     <h3 className="text-2xl font-display font-black text-white tracking-tight transition-colors group-hover:text-cyan-100">AI builds your path</h3>
@@ -342,7 +349,7 @@ export default function Home() {
                 <RevealItem>
                   <div className="relative group">
                     <div className="relative mb-12 flex h-28 w-28 items-center justify-center rounded-[2rem] border border-white/[0.04] bg-white/[0.01] transition-all duration-700 group-hover:border-emerald-500/50 group-hover:bg-emerald-500/[0.05] group-hover:shadow-[0_0_60px_rgba(16,185,129,0.1)] group-hover:-translate-y-2">
-                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#08060f] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-emerald-400 group-hover:border-emerald-500/30">03</div>
+                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#0a0b1b] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-emerald-400 group-hover:border-emerald-500/30">03</div>
                       <BookOpen className="h-12 w-12 text-emerald-400/50 transition-all duration-700 group-hover:scale-110 group-hover:text-emerald-400 group-hover:rotate-6" />
                     </div>
                     <h3 className="text-2xl font-display font-black text-white tracking-tight transition-colors group-hover:text-emerald-100">Learn & practice</h3>
@@ -356,7 +363,7 @@ export default function Home() {
                 <RevealItem>
                   <div className="relative group">
                     <div className="relative mb-12 flex h-28 w-28 items-center justify-center rounded-[2rem] border border-white/[0.04] bg-white/[0.01] transition-all duration-700 group-hover:border-orange-500/50 group-hover:bg-orange-500/[0.05] group-hover:shadow-[0_0_60px_rgba(249,115,22,0.1)] group-hover:-translate-y-2">
-                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#08060f] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-orange-400 group-hover:border-orange-500/30">04</div>
+                      <div className="absolute -top-2 -right-2 h-8 w-11 rounded-xl bg-[#0a0b1b] border border-white/10 flex items-center justify-center text-[10px] font-black text-white/30 transition-colors group-hover:text-orange-400 group-hover:border-orange-500/30">04</div>
                       <Rocket className="h-12 w-12 text-orange-400/50 transition-all duration-700 group-hover:scale-110 group-hover:text-orange-400 group-hover:-rotate-6" />
                     </div>
                     <h3 className="text-2xl font-display font-black text-white tracking-tight transition-colors group-hover:text-orange-100">Land the job</h3>
@@ -371,25 +378,25 @@ export default function Home() {
         </section>
 
         {/* Highlight Section: The "No Extra Phase" Interview Prep */}
-        <section className="relative w-full py-24 lg:py-32 overflow-hidden bg-[#08060f]">
+        <section className="relative w-full py-24 lg:py-32 overflow-hidden bg-[#0a0b1b]">
           <div className="relative w-auto max-w-5xl mx-auto px-6">
             <Reveal delay={0.1} y={40}>
               <div className="relative rounded-[3rem] border border-white/[0.05] bg-gradient-to-b from-white/[0.03] to-transparent p-12 lg:p-20 overflow-hidden group">
                 {/* Background Glow */}
                 <div className="absolute -top-24 -right-24 h-96 w-96 bg-brand-violet/10 blur-[100px] pointer-events-none" />
                 <div className="absolute -bottom-24 -left-24 h-96 w-96 bg-brand-cyan/10 blur-[100px] pointer-events-none" />
-                
+
                 <div className="relative z-10 flex flex-col items-center text-center">
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 border border-white/10 mb-8">
                     <Sparkles className="h-8 w-8 text-violet-400 animate-pulse" />
                   </div>
-                  
+
                   <h2 className="font-display text-3xl md:text-5xl font-black tracking-tight text-white leading-tight">
                     There is no <span className="text-red-500/80 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)] px-2">"Interview Prep Phase"</span>
                   </h2>
-                  
+
                   <p className="mt-8 text-xl text-white/60 font-medium max-w-2xl leading-relaxed">
-                    Most platforms make you study, then prepare. <span className="text-white">We built the prep into the learning.</span> 
+                    Most platforms make you study, then prepare. <span className="text-white">We built the prep into the learning.</span>
                     As soon as you complete a topic, you're hit with interview questions specifically about what you just learned.
                   </p>
 
@@ -418,13 +425,13 @@ export default function Home() {
                             <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                             The TrackMate Loop
                           </div>
-                          
+
                           {/* Topic Card Mockup */}
                           <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 space-y-3">
                             <div className="flex items-center justify-between">
                               <div className="h-2 w-20 bg-emerald-400/40 rounded" />
                               <div className="h-4 w-4 rounded-full bg-emerald-500 flex items-center justify-center">
-                                <Zap className="h-2 w-2 text-[#08060f]" fill="#08060f" />
+                                <Zap className="h-2 w-2 text-[#0a0b1b]" fill="#0a0b1b" />
                               </div>
                             </div>
                             <div className="h-px w-full bg-emerald-500/10" />
@@ -446,9 +453,9 @@ export default function Home() {
         </section>
 
         {/* Cinematic Visual Section */}
-        <section className="relative w-full py-48 lg:py-64 overflow-hidden bg-[#08060f]">
+        <section className="relative w-full py-48 lg:py-64 overflow-hidden bg-[#0a0b1b]">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-violet-600/5 blur-[180px] pointer-events-none" />
-          
+
           <div className="relative w-full max-w-7xl mx-auto px-6">
             <Reveal delay={0.1}>
               <div className="mx-auto max-w-2xl text-center mb-32">
@@ -480,19 +487,19 @@ export default function Home() {
 
                   <div className="relative aspect-[21/9] w-full overflow-hidden rounded-[4rem]">
                     {/* Blurred Borders / Vignette / Edge Fading */}
-                    <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_150px_80px_#08060f]" />
-                    
-                    <img 
-                      src="/images/ladder-roadmap.png" 
-                      alt="Career Roadmap Ladder" 
+                    <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_150px_80px_#0a0b1b]" />
+
+                    <img
+                      src="/images/ladder-roadmap.png"
+                      alt="Career Roadmap Ladder"
                       className="w-full h-full object-cover opacity-60 transition-all duration-1000"
                       style={{ maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 90%)' }}
                     />
-                    
+
                     {/* Glowing Mesh Overlay */}
                     <div className="absolute inset-0 z-10 opacity-30 bg-[radial-gradient(circle_at_50%_50%,rgba(124,58,237,0.2),transparent_70%)]" />
                   </div>
-                  
+
                   {/* HUD Labels */}
                   <div className="absolute top-[85%] left-[59%] flex items-center gap-4 transition-all duration-700 z-30">
                     <div className="h-px w-[90px] bg-white/70 shadow-[0_0_20px_rgba(255,255,255,0.8)]" />
@@ -534,21 +541,21 @@ export default function Home() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="relative w-full py-24 lg:py-40 overflow-hidden bg-[#08060f]">
+        <section className="relative w-full py-24 lg:py-40 overflow-hidden bg-[#0a0b1b]">
           {/* Subtle Ambient Glows */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-violet/5 blur-[120px] pointer-events-none" />
-          
+
           <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
             <Reveal delay={0.1}>
               <div className="flex flex-col items-center">
                 <span className="inline-block rounded-full border border-white/5 bg-white/[0.03] px-4 py-1.5 text-[10px] font-display font-black uppercase tracking-[0.2em] text-violet-400 shadow-[0_0_20px_rgba(124,58,237,0.1)]">
                   Start Today — It's Free
                 </span>
-                
+
                 <h2 className="mt-8 font-display text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl max-w-4xl leading-[1.1]">
                   Your dream tech career is <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(167,139,250,0.3)]">closer than you think</span>
                 </h2>
-                
+
                 <p className="mt-8 max-w-2xl text-lg font-medium text-white/40 leading-relaxed italic">
                   Join thousands of developers who stopped guessing and started following a clear, AI-powered path to their target role.
                 </p>
@@ -558,7 +565,7 @@ export default function Home() {
                     Start Your Career Path — It's Free
                     <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
-                  
+
                   <p className="text-sm font-medium text-white/20 tracking-wide uppercase">
                     No credit card required · Takes 2 minutes to set up
                   </p>
@@ -569,7 +576,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-white/[0.04] bg-[#08060f] py-12">
+        <footer className="border-t border-white/[0.04] bg-[#0a0b1b] py-12">
           <div className="mx-auto max-w-7xl px-6 text-center md:flex md:items-center md:justify-between">
             <div className="flex items-center justify-center gap-2.5 md:justify-start">
               <div className="h-7 w-7 rounded bg-gradient-to-br from-[#7c3aed] to-[#4f46e5] flex items-center justify-center shadow-[0_0_10px_rgba(124,58,237,0.3)]">
